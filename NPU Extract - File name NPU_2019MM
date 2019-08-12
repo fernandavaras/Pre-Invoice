@@ -1,0 +1,31 @@
+
+
+
+
+Select c.supplier_cbn, h.*, m.* from wizadmin.wty_header h, wizadmin.monitoring_preinvoice m, wizadmin.company_profile c 
+
+
+where m.cust_id=h.cust_id 
+
+
+and m.wty_id=h.wty_id 
+
+
+and M.CUST_ID=C.CUST_ID 
+
+
+and c.cust_id=h.cust_id 
+
+
+and H.WTY_TYPE='WTYHTYPE_LABORCLAIM' 
+
+
+/*  DAte needs to be updated */
+
+and m.month='201907' 
+
+
+and c.type='COMP_ASP' 
+
+
+  
