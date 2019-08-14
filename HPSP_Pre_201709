@@ -1,64 +1,65 @@
 
+select
+
+c.SUPPLIER_CBN,wty_REF,wh.STATUS,DECLARED_DATE,PREINVOICED_DATE,m.PREINVOICE_ID,m.CUST_ID
 
 
-select 
-
-c.SUPPLIER_CBN,wty_REF,wh.STATUS,DECLARED_DATE,PREINVOICED_DATE, m.PREINVOICE_ID, m.CUST_ID  
+,m.MONTH ,m.WTY_ID,m.SUPPLIER_CBN, WH.PRODUCT_NUMBER,
 
 
-,m.MONTH ,m.WTY_ID ,m.SUPPLIER_CBN, WH.PRODUCT_NUMBER,  
+WH.SERIAL_NUMBER,d.LINE_NUMBER,PART_NUMBER,WD.RMA_NUMBER,REIMBURSEMENT_FLAG,QTY,
 
 
-WH.SERIAL_NUMBER, d.LINE_NUMBER, PART_NUMBER, WD.RMA_NUMBER ,REIMBURSEMENT_FLAG ,QTY,  
+m.CURRENCY_CODE,REIMBURSEMENT_AMOUNT,labor_reimbursement,PREINVOICE_CASE,packing_Ref,shipment_date
 
 
-m.CURRENCY_CODE, REIMBURSEMENT_AMOUNT, labor_reimbursement ,PREINVOICE_CASE,packing_Ref,shipment_date  
+from
 
 
-from  
+wizadmin.monitoring_preinvoice m,wizadmin.preinvoice_Detail d,wizadmin.company_profile c,wizadmin.WTY_HEADER WH,wizadmin.WTY_DETAIL WD
 
 
-wizadmin.monitoring_preinvoice m ,wizadmin.preinvoice_Detail d , wizadmin.company_profile c, wizadmin.WTY_HEADER WH, wizadmin.WTY_DETAIL WD  
+where m.preinvoice_id =d.preinvoice_id
 
 
-where m.preinvoice_id =d.preinvoice_id  
+and m.cust_ID = c.cust_id and WH.WTY_ID=WD.WTY_ID and m.wty_id = wh.wty_id and wd.line_number=d.line_number
 
 
-and m.cust_ID = c.cust_id and WH.WTY_ID = WD.WTY_ID and m.wty_id = wh.wty_id  and wd.line_number=d.line_number 
-
-
-AND d.part_number = wd.part_Declared AND m.cust_id = wh.cust_id  
+AND d.part_number = wd.part_Declared AND m.cust_id = wh.cust_id
 
 
 /* Date must be updated */
 
 
-and c.type = 'COMP_HP_SP' and month ='201907'  
+and c.type='COMP_HP_SP' and month ='201907'
 
 
-union  
+union
 
 
-select c.SUPPLIER_CBN,WTY_REF,wh.STATUS,DECLARED_DATE,PREINVOICED_DATE, null "PREINVOICE_ID", c.CUST_ID  
+select c.SUPPLIER_CBN,WTY_REF,wh.STATUS,DECLARED_DATE,PREINVOICED_DATE, null "PREINVOICE_ID", c.CUST_ID
 
 
-, null "MONTH" ,wh.WTY_ID ,C.SUPPLIER_CBN, WH.PRODUCT_NUMBER,  
+, null "MONTH" ,wh.WTY_ID ,C.SUPPLIER_CBN, WH.PRODUCT_NUMBER,
 
 
-WH.SERIAL_NUMBER, wd.LINE_NUMBER, PART_declared, WD.RMA_NUMBER ,null "REIMBURSEMENT_FLAG" ,null "QTY",  
+WH.SERIAL_NUMBER, wd.LINE_NUMBER, PART_declared, WD.RMA_NUMBER ,null "REIMBURSEMENT_FLAG" ,null "QTY",
 
 
-c.CURRENCY_CODE,null "REIMBURSEMENT_AMOUNT", null "LABOR_REIMBURSEMENT" ,NULL "PREINVOICE_CASE" , packing_Ref,shipment_date 
+c.CURRENCY_CODE,null "REIMBURSEMENT_AMOUNT", null "LABOR_REIMBURSEMENT" ,NULL "PREINVOICE_CASE" , packing_Ref,shipment_date
 
 
-from wizadmin.company_profile c, wizadmin.WTY_HEADER WH, wizadmin.WTY_DETAIL WD  
+from wizadmin.company_profile c, wizadmin.WTY_HEADER WH, wizadmin.WTY_DETAIL WD
 
 
-where WH.WTY_ID =WD.WTY_ID AND C.CUST_ID =WH.CUST_ID  
+where WH.WTY_ID =WD.WTY_ID AND C.CUST_ID =WH.CUST_ID
 
 
-and c.type = 'COMP_HP_SP' and  
+and c.type = 'COMP_HP_SP' and
 
 /* Date must be updated */
 
-preinvoiced_Date between '01-jul-2019' and '31-jul-2019' AND WH.WTY_ID NOT IN (SELECT WTY_ID FROM wizadmin.MONITORING_PREINVOICE) 
+preinvoiced_Date between '01/07/2019' and '31/07/2019' AND WH.WTY_ID NOT IN (SELECT WTY_ID FROM wizadmin.MONITORING_PREINVOICE)
+
+
+
