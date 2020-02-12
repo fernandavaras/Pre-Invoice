@@ -1,0 +1,23 @@
+
+
+
+Select 
+
+c.supplier_cbn, h.Wty_Id, h.Cust_Id, h.Wty_Ref, h.Wty_Type, h.Status, h.Logon, h.Contact_Name, h.Contact_Phone, h.Endusertitle, h.Endusername,h.Enduserphonecountry, h.Enduserphonenumber, h.Endcompanyname, h.Comments, h.Product_Number, h.Serial_Number,h.Preinvoiced_Date, h.Declared_Date, h.Sale_Date, h.Failure_Date, h.Failure_Reason, h.Technician_Name, h.Date_Repair, h.Warranty_Status, h.Warranty_Reject_Reason, h.Warranty_Period, h.Service, h.Data_Origin, h.Enduseremail, h.Part_Claim_Type, h.Force_Order_Flag, h.Force_Reason, h.Force_Case, h.Otc, h.Pop_Number, h.Supplier_Id,
+m.Preinvoice_Id, m.Preinvoice_Reference, m.Cust_Id, m.Month, m.Status, m.Wty_Id, m.Supplier_Cbn, m.Supplier_Id, m.Bonus, m.Product_Number, m.Serial_Number, m.Labor_Reimbursement, m.Local_Labor_Reimbursement, m.Labor_Adjustment, m.Currency_Exchange_Rate, m.Currency_Code, m.Processed_Date, m.Rerepair_Flag
+
+from WIZADMIN.WTY_HEADER h, WIZADMIN.MONITORING_PREINVOICE m, WIZADMIN.COMPANY_PROFILE c
+
+where m.Cust_Id=h.Cust_Id 
+
+and m.Wty_Id=h.Wty_Id 
+
+and m.Cust_Id=c.Cust_Id 
+
+and c.Cust_Id=h.Cust_Id 
+
+and h.WTY_TYPE='WTYHTYPE_LABORCLAIM' 
+
+and m.Month='202001' 
+
+and c.Type='COMP_ASP' 
